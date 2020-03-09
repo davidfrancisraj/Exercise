@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Exercise</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#BF0000"/>
+<link rel="manifest" href="manifest.json">
+<style>
+body{margin: 0;}
+main {max-width: 400px;margin: 0 auto;padding: 20px;text-align: center;}
+img {max-width: 100%;max-height: 200px;}
+picture {border-bottom: 2px solid #000;display: block;padding: 10px;}
+select{font-size:16px;padding:10px;width:100%;text-align:center;font-weight:600;border: 2px solid #000;}
+select:focus{box-shadow: none;outline: 0;}
+.more img{max-height:none}
+.switcher input{opacity:0;position:absolute}.switcher span{padding:2px 4px;display:inline-block;border:2px solid #000;margin-bottom:10px;font-weight:600}.switcher span:before,.switcher span:after{border-radius:4px;padding:4px 10px;line-height:1;display:inline-block}.switcher span:before{content:'More'}.switcher span:after{content:'Less';background:#bf0000;color:#fff}.switcher input:checked+span:before{background:#bf0000;color:#fff}.switcher input:checked+span:after{background:transparent;color:#000}
+</style>
+
+</head>
+
+<body>
+
+<main>
+
+<span class="switcher">
+   <label for="switcher"><input type="checkbox" id="switcher" onclick="chooser()" /><span></span></label>
+</span>
+
+<select onchange="chooser()" id="chooser">
+<option value="strech">Strech</option>
+<option value="set1">Set1</option>
+<option value="set2">Set2</option>
+<option value="set3">Set3</option>
+<option value="set4">Set4</option>
+<option value="set5">Set5</option>
+<option value="set6">Set6</option>
+<optgroup label="Hand">
+<option value="bicepes">Bicepes</option>
+<option value="triceps">Triceps</option>
+<option value="forearms">Forearms</option>
+</optgroup>
+<optgroup label="Shoulder">
+<option value="frontshoulder">Front Shoulder</option>
+<option value="backshoulder">Back Shoulder</option>
+<option value="traps">Traps</option>
+</optgroup>
+<optgroup label="Chest">
+<option value="upperchest">Upper Chest</option>
+<option value="lowerchest">Lower Chest</option>
+<option value="middlechest">Middle Chest</option>
+</optgroup>
+<optgroup label="Back">
+<option value="upperback">Upper Back</option>
+<option value="lowerback">Lower Back</option>
+<option value="wings">Wings</option>
+</optgroup>
+<optgroup label="Abs">
+<option value="upperabs">Upper Abs</option>
+<option value="lowerabs">Lower Abs</option>
+<option value="sidecut">Side Cut</option>
+</optgroup>
+<optgroup label="Leg">
+<option value="frontthigh">front Thigh</option>
+<option value="backthigh">Back Thigh</option>
+<option value="hip">Hip</option>
+<option value="calf">Calf</option>
+</optgroup>
+</select>
+
+<div id="container"></div>
+
+
+</main>
+
+<script>
+
+// global constant variables
+var counter = {strech:8,backthigh:3,calf:2,forearms:5,frontthigh:2,middlechest:5,triceps:5,upperback:5,upperabs:5,upperchest:5}
+var container = document.getElementById('container');
+var set1 = ['frontthigh','bicepes','frontshoulder','upperchest','lowerback','upperabs','calf'];
+var set2 = ['backthigh','triceps','backshoulder','middlechest','upperback','lowerabs','calf'];
+var set3 = ['forearms','traps','lowerchest','wings','sidecut','hip','calf'];
+var sets = [set1,set2,set3,set1,set2,set3];
+
+// main method to display the content based on selections
+function chooser() {
+
+	var choosed = document.getElementById('chooser').value;
+	var pics = [];
+	var pre = '';
+	var numberofexecercise = counter[choosed] ? counter[choosed] : 4 ;
+	var checkBox = document.getElementById("switcher");
+   
+    if (checkBox.checked == true){
+		pre = '_';
+		container.classList.add("more");
+    } else {
+		more = false;
+		container.classList.remove("more");
+    }
+	
+	is_set = choosed.substr(0,3) === 'set'? true : false;
+	
+	if(!is_set){
+	for(var i=1;i<=numberofexecercise;i++){
+	
+	a = "<picture><img src=" +choosed + '/'+pre+choosed+i+".png alt='"+choosed + '/'+pre+choosed+i+"' /></picture>";
+	pics = pics + a;
+	}
+	}
+	
+	if(is_set) {
+	var set = choosed.substr(3) - 1;
+	console.log(set);
+	console.log(sets[set]);
+    var opt = set > 2 ? 2 : 1;
+	for(var i=0;i<=6;i++){
+	a = "<picture><img src=" +sets[set][i]+ '/'+pre+sets[set][i]+opt+".png alt='img' /></picture>";
+	pics = pics + a;
+	}
+	}
+	
+	document.getElementById('container').innerHTML = pics;
+}
+chooser();
+</script>
+
+</body></html>
